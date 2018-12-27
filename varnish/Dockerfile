@@ -1,0 +1,2 @@
+FROM jonbaldie/varnish:latest
+

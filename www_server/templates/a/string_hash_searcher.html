@@ -1,0 +1,16 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>String hash searcher</title>
+</head>
+<body>
+<form method="get" action="{% url 'brute_force_hash' %}">
+    {{ form }}
+    Prefix hasha sha-256:
+    <input id="hash_prefix" type="text" name="hash_prefix"/>
+    <button type="submit">Szukaj</button>
+</form>
+</body>
+</html>
