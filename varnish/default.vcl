@@ -1,8 +1,7 @@
 vcl 4.0;
-
 import directors;
 
-backend web { .host = "web"; .port = "8000"; }
+backend web1 { .host = "web1"; .port = "8000"; }
 backend web2 { .host = "web2"; .port = "8000"; }
 
 
@@ -10,12 +9,16 @@ sub vcl_init {
 
     // set up a round-robin director with two backends
     new round_robin_director = directors.round_robin();
-    round_robin_director.add_backend(web);
+    round_robin_director.add_backend(web1);
     round_robin_director.add_backend(web2);
 }
 
 sub vcl_recv {
-    return (hash);
+    if (req.url ~ "^/compute_hash") {
+    	return (hash);
+    } else {
+        return (pass);
+    }
 }
 
 sub vcl_backend_fetch {

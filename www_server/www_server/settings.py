@@ -75,9 +75,14 @@ WSGI_APPLICATION = 'www_server.wsgi.application'
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+    'default': {},
+    'rainbow1': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, 'rainbow1.sqlite3'),
+    },
+    'rainbow2': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'rainbow2.sqlite3'),
     }
 }
 

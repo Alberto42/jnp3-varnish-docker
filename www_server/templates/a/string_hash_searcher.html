@@ -6,11 +6,20 @@
     <title>String hash searcher</title>
 </head>
 <body>
-<form method="get" action="{% url 'brute_force_hash' %}">
-    {{ form }}
+<form method="get" action="{% url 'brute_force_hash_sync' %}">
     Prefix hasha sha-256:
-    <input id="hash_prefix" type="text" name="hash_prefix"/>
-    <button type="submit">Szukaj</button>
+    <input id="prefix" type="text" name="prefix"/>
+    <button type="submit">Szukaj synchronicznie</button>
+</form>
+<form method="post" action="{% url 'brute_force_hash_async' %}">
+    Prefix hasha sha-256:
+    <input id="prefix" type="text" name="prefix"/>
+    <button type="submit">Zleć asynchronicznie</button>
+</form>
+<form method="post" action="{% url 'hash_query' %}">
+    Hash sha-256:
+    <input id="hash_value" type="text" name="hash_value"/>
+    <button type="submit">Zapytaj bazy danych</button>
 </form>
 </body>
 </html>

@@ -1,0 +1,17 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>String hash searcher</title>
+</head>
+<body>
+Wynik: {{ result }}
+<br>
+<form method="post" action="{% url 'hash_query' %}">
+    Hash sha-256:
+    <input id="hash_value" type="text" name="hash_value"/>
+    <button type="submit">Zapytaj bazy danych</button>
+</form>
+</body>
+</html>

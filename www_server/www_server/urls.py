@@ -16,10 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from a.views import brute_force_hash, string_hash_searcher
+from a.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',string_hash_searcher, name="start"),
-    path('compute_hash', brute_force_hash, name="brute_force_hash")
+    path('compute_hash', brute_force_hash_sync, name="brute_force_hash_sync"),
+    path('request_hash', brute_force_hash_async, name="brute_force_hash_async"),
+    path('hash_query', hash_query, name="hash_query"),
 ]

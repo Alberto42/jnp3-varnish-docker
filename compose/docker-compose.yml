@@ -1,23 +1,42 @@
-version: '3'
+version: '2'
 services:
-  web:
+  rabbitmq:
+    image: rabbitmq:management
+    expose:
+      - "5672"
+    ports:
+     - "15672:15672"
+#     - "5672:5672"
+  web1:
     build: ../www_server
 #    ports:
 #     - "8000:8000"
     volumes:
       - ./../www_server:/code
+    depends_on:
+      - rabbitmq
   web2:
     build: ../www_server
 #    ports:
 #      - "8001:8000"
     volumes:
       - ./../www_server:/code
+    depends_on:
+      - rabbitmq
+  async_resolver:
+    build: ../async_resolver
+    volumes:
+      - ./../async_resolver:/code
+    depends_on:
+      - rabbitmq
+      - web1
+      - web2
   varnish:
-      build: ../varnish
-      ports:
-        - "8000:80"
-      volumes:
-        - ./../varnish/default.vcl:/etc/varnish/default.vcl
-      depends_on:
-        - web
-        - web2
+    build: ../varnish
+    ports:
+      - "8000:80"
+    volumes:
+      - ./../varnish/default.vcl:/etc/varnish/default.vcl
+    depends_on:
+      - web1
+      - web2
