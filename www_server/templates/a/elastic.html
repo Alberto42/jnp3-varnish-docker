@@ -1,0 +1,62 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>String hash searcher</title>
+</head>
+<body>
+<form method="post" action="{% url 'elastic_add' %}">
+    Nazwa:
+    <input type="text" name="ename"/>
+    <br>
+    <input type="text" name="v0name"/>
+    <input type="text" name="v0value"/>
+    <br>
+    <input type="text" name="v1name"/>
+    <input type="text" name="v1value"/>
+    <br>
+    <input type="text" name="v2name"/>
+    <input type="text" name="v2value"/>
+    <br>
+    <input type="text" name="v3name"/>
+    <input type="text" name="v3value"/>
+    <br>
+    <input type="text" name="v4name"/>
+    <input type="text" name="v4value"/>
+    <br>
+    <input type="text" name="v5name"/>
+    <input type="text" name="v5value"/>
+    <br>
+    <button type="submit">Dodaj</button>
+</form>
+<form method="post" action="{% url 'elastic_lookup' %}">
+    <input type="text" name="sv0name"/>
+    <input type="text" name="sv0value"/>
+    <br>
+    <input type="text" name="sv1name"/>
+    <input type="text" name="sv1value"/>
+    <br>
+    <input type="text" name="sv2name"/>
+    <input type="text" name="sv2value"/>
+    <br>
+    <input type="text" name="sv3name"/>
+    <input type="text" name="sv3value"/>
+    <br>
+    <input type="text" name="sv4name"/>
+    <input type="text" name="sv4value"/>
+    <br>
+    <input type="text" name="sv5name"/>
+    <input type="text" name="sv5value"/>
+    <br>
+    <button type="submit">Wyszukaj</button>
+</form>
+{% for name, data in result %}
+{{name}}<br>
+{% for k, v in data.items %}
+&emsp;{{k}}: {{v}}
+<br>
+{% endfor %}
+{% endfor %}
+</body>
+</html>

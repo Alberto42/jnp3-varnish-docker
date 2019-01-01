@@ -24,4 +24,7 @@ urlpatterns = [
     path('compute_hash', brute_force_hash_sync, name="brute_force_hash_sync"),
     path('request_hash', brute_force_hash_async, name="brute_force_hash_async"),
     path('hash_query', hash_query, name="hash_query"),
+    path('elastic_lookup', elastic_lookup, name="elastic_lookup"),
+    path('elastic_add', elastic_add, name="elastic_add"),
+    path('elastic', elastic, name="elastic"),
 ]

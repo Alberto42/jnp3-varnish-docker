@@ -1,5 +1,14 @@
 version: '2'
 services:
+  elastic:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.5.4
+    volumes:
+      - ../esdata:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - "discovery.type=single-node"
   rabbitmq:
     image: rabbitmq:management
     expose:
@@ -15,6 +24,9 @@ services:
       - ./../www_server:/code
     depends_on:
       - rabbitmq
+      - elastic
+      - async_resolver1
+      - async_resolver2
   web2:
     build: ../www_server
 #    ports:
@@ -23,14 +35,21 @@ services:
       - ./../www_server:/code
     depends_on:
       - rabbitmq
-  async_resolver:
+      - elastic
+      - async_resolver1
+      - async_resolver2
+  async_resolver1:
     build: ../async_resolver
     volumes:
       - ./../async_resolver:/code
     depends_on:
       - rabbitmq
-      - web1
-      - web2
+  async_resolver2:
+    build: ../async_resolver
+    volumes:
+      - ./../async_resolver:/code
+    depends_on:
+      - rabbitmq
   varnish:
     build: ../varnish
     ports:

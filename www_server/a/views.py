@@ -8,6 +8,9 @@ from django.views.decorators.csrf import csrf_exempt
 from www_server.utils import string_generator
 from django.db import connections
 
+from elasticsearch import Elasticsearch
+es = Elasticsearch([{'host': 'elastic', 'port': 9200}])
+
 def string_hash_searcher(request):
     return render(request,'a/string_hash_searcher.html')
 
@@ -47,13 +50,13 @@ def brute_force_hash_async(request):
 
 @csrf_exempt
 def hash_query(request):
-    hash_value = request.POST['hash_value']
+    hash_value = request.POST['hash_value'] + '%'
     if hash_value < 'l':
         db = 'rainbow1'
     else:
         db = 'rainbow2'
     with connections[db].cursor() as cursor:
-        cursor.execute("SELECT text FROM rainbow WHERE hash = %s", [hash_value]);
+        cursor.execute("SELECT text FROM rainbow WHERE hash LIKE %s", [hash_value]);
         row = cursor.fetchone()
         if row is None:
             row = ''
@@ -61,4 +64,30 @@ def hash_query(request):
             row = row[0]
         return render(request,'a/query.html', {'result' : row})
 
+@csrf_exempt
+def elastic(request):
+    return render(request,'a/elastic.html', {'result' : []})
 
+@csrf_exempt
+def elastic_lookup(request):
+    e1 = {}
+    for i in range(6):
+        if request.POST['sv' + str(i) + 'name']:
+            e1[request.POST['sv' + str(i) + 'name']] = request.POST['sv' + str(i) + 'value']
+    res = es.search(index='data',body={'query':{'match':e1}})
+    r = []
+    for re in res['hits']['hits']:
+        n = re['_source']['name']
+        del re['_source']['name']
+        u = (n, re['_source'])
+        r.append(u)
+    return render(request,'a/elastic.html', {'result' : r})
+
+@csrf_exempt
+def elastic_add(request):
+    e1 = {'name' : request.POST['ename']}
+    for i in range(6):
+        if request.POST['v' + str(i) + 'name']:
+            e1[request.POST['v' + str(i) + 'name']] = request.POST['v' + str(i) + 'value']
+    es.index(index='data',doc_type='data',body=e1)
+    return elastic(request)
