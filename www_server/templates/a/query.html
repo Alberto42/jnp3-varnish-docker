@@ -6,14 +6,16 @@
     <title>String hash searcher</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <style>
-        body {margin-left: 20px}
+        body {
+            margin-left: 20px
+        }
     </style>
 </head>
 <body>
 {% if result %}
-    Wynik: {{ result }}
+Wynik: {{ result }}
 {% else %}
-    Niestety nie ma wyniku dla tego hasha w bazach danych. Musisz najpierw zlecić policzenie go.
+Niestety nie ma wyniku dla tego hasha w bazach danych. Musisz najpierw zlecić policzenie go.
 {% endif %}
 <br>
 <form method="post" action="{% url 'hash_query' %}">

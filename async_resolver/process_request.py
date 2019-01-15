@@ -3,11 +3,12 @@ import pika
 import hashlib
 import sys
 
+
 def string_generator():
     str = list("")
     while True:
         length = len(str)
-        for i in reversed(range(-1,length)):
+        for i in reversed(range(-1, length)):
             if (i == -1):
                 str = list("a") + str
                 yield str
@@ -19,6 +20,7 @@ def string_generator():
             elif (str[i] == 'z'):
                 str[i] = 'a'
 
+
 while True:
     try:
         connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbitmq'))
@@ -28,6 +30,8 @@ while True:
 
 channel = connection.channel()
 channel.queue_declare(queue='hash_requests')
+
+
 def callback(ch, method, properties, hash_prefix):
     hash_prefix = hash_prefix.decode()
     print("Got request: " + hash_prefix)
@@ -46,6 +50,7 @@ def callback(ch, method, properties, hash_prefix):
             channel.basic_publish(exchange='', routing_key='hash_results', body=h + " " + s)
             connection.close()
             return
+
 
 channel.basic_consume(callback,
                       queue='hash_requests',
