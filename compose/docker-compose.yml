@@ -15,11 +15,8 @@ services:
       - "5672"
     ports:
      - "15672:15672"
-#     - "5672:5672"
   web1:
     build: ../www_server
-#    ports:
-#     - "8000:8000"
     volumes:
       - ./../www_server:/code
     depends_on:
@@ -29,8 +26,6 @@ services:
       - async_resolver2
   web2:
     build: ../www_server
-#    ports:
-#      - "8001:8000"
     volumes:
       - ./../www_server:/code
     depends_on:

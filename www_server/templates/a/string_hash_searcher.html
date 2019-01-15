@@ -4,23 +4,52 @@
 <head>
     <meta charset="UTF-8">
     <title>String hash searcher</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body>
-<form method="get" action="{% url 'brute_force_hash_sync' %}">
-    Prefix hasha sha-256:
-    <input id="prefix" type="text" name="prefix"/>
-    <button type="submit">Szukaj synchronicznie</button>
-</form>
-<form method="post" action="{% url 'brute_force_hash_async' %}">
-    Prefix hasha sha-256:
-    <input id="prefix" type="text" name="prefix"/>
-    <button type="submit">Zleć asynchronicznie</button>
-</form>
-<form method="post" action="{% url 'hash_query' %}">
-    Hash sha-256:
-    <input id="hash_value" type="text" name="hash_value"/>
-    <button type="submit">Zapytaj bazy danych</button>
-</form>
-<a href="{% url 'elastic' %}">Elastic</a>
+
+<div class="container" style="display: inline-block">
+    <div class="row" style="margin-top: 10px">
+        <form method="get" action="{% url 'brute_force_hash_sync' %}">
+            <div class="col-sm-2">
+                Prefix hasha sha-256:
+            </div>
+            <div class="col-sm-2">
+                <input id="prefix" type="text" name="prefix"/>
+            </div>
+            <div class="col-sm-2">
+                <button type="submit">Szukaj synchronicznie</button>
+            </div>
+        </form>
+    </div>
+    <div class="row" style="margin-top: 10px">
+        <form method="post" action="{% url 'brute_force_hash_async' %}">
+            <div class="col-sm-2">
+                Prefix hasha sha-256:
+            </div>
+            <div class="col-sm-2">
+                <input id="prefix" type="text" name="prefix"/>
+            </div>
+            <div class="col-sm-2">
+                <button type="submit">Zleć asynchronicznie</button>
+            </div>
+        </form>
+    </div>
+    <div class="row" style="margin-top: 10px">
+        <form method="post" action="{% url 'hash_query' %}">
+            <div class="col-sm-2">
+                Hash sha-256:
+            </div>
+            <div class="col-sm-2">
+                <input id="hash_value" type="text" name="hash_value"/>
+            </div>
+            <div class="col-sm-2">
+                <button type="submit">Zapytaj bazy danych</button>
+            </div>
+        </form>
+    </div>
+    <a href="{% url 'elastic' %}">Elastic</a>
+</div>
+
 </body>
 </html>

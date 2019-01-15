@@ -11,6 +11,8 @@ from django.db import connections
 from elasticsearch import Elasticsearch
 es = Elasticsearch([{'host': 'elastic', 'port': 9200}])
 
+HASH_PREFIX_FORMAT = r"^[0-9a-f]+$"
+
 def string_hash_searcher(request):
     return render(request,'a/string_hash_searcher.html')
 
@@ -18,8 +20,7 @@ def string_hash_searcher(request):
 def brute_force_hash_sync(request):
     hash_prefix = request.GET['prefix']
     
-    # pattern = re.compile("^[1-9a-f]+[0-9a-f]*$")
-    if ( not re.match(r"^[1-9a-f]+[0-9a-f]*$",hash_prefix) ):
+    if ( not re.match(HASH_PREFIX_FORMAT,hash_prefix) ):
         return render(request,'a/brute_force_hash_error.html')
 
     for i in string_generator():
@@ -35,8 +36,7 @@ def brute_force_hash_sync(request):
 def brute_force_hash_async(request):
     hash_prefix = request.POST['prefix']
     
-    # pattern = re.compile("^[1-9a-f]+[0-9a-f]*$")
-    if ( not re.match(r"^[0-9a-f]+$",hash_prefix) ):
+    if ( not re.match(HASH_PREFIX_FORMAT, hash_prefix)):
         return render(request,'a/brute_force_hash_error.html')
 
 

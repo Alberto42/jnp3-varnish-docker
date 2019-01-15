@@ -4,14 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <title>String hash searcher</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+        body {margin-left: 20px}
+    </style>
 </head>
 <body>
-Wynik: {{ result }}
+{% if result %}
+    Wynik: {{ result }}
+{% else %}
+    Niestety nie ma wyniku dla tego hasha w bazach danych. Musisz najpierw zlecić policzenie go.
+{% endif %}
 <br>
 <form method="post" action="{% url 'hash_query' %}">
     Hash sha-256:
     <input id="hash_value" type="text" name="hash_value"/>
     <button type="submit">Zapytaj bazy danych</button>
 </form>
+<a href="{% url 'start' %}">Wstecz</a> </br>
 </body>
 </html>
