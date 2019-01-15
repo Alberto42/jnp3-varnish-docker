@@ -76,11 +76,14 @@ def elastic(request):
 
 @csrf_exempt
 def elastic_lookup(request):
-    e1 = {}
+    key_value_list = []
     for i in range(6):
-        if request.POST['sv' + str(i) + 'name']:
-            e1[request.POST['sv' + str(i) + 'name']] = request.POST['sv' + str(i) + 'value']
-    res = es.search(index='data', body={'query': {'match': e1}})
+        key = request.POST['sv' + str(i) + 'name']
+        if key:
+            value = request.POST['sv' + str(i) + 'value']
+            key_value_list.append({"match" : {key : value}})
+
+    res = es.search(index='data', body={ "query": { "bool": { "must": key_value_list}}})
     r = []
     for re in res['hits']['hits']:
         n = re['_source']['name']
