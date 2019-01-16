@@ -15,7 +15,7 @@
 {% if result %}
 Wynik: {{ result }}
 {% else %}
-Niestety nie ma wyniku dla tego hasha w bazach danych. Musisz najpierw zlecić policzenie go.
+Niestety nie ma wyniku dla tego hasha w bazach danych.
 {% endif %}
 <br>
 <form method="post" action="{% url 'hash_query' %}">
